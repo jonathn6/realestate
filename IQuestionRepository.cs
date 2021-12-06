@@ -8,7 +8,7 @@ namespace realestate
     public interface IQuestionRepository
     {
         IEnumerable<Question> GetQuestions(int Chapter);
-        Question GetNextQuestion(int id);
-        Question GetSpecificQuestion(int id);
+        Question GetNextQuestion(int Chapter, int id);
+        Question GetSpecificQuestion(int Chapter, int id);
     }
 }

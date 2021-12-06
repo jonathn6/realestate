@@ -13,6 +13,7 @@ namespace realestate
         public int questions_right { get; set; }
         public int questions_tried { get; set; }
         public string whichScreen { get; set; }
+        public string chapter { get; set; }
 
     }
 }

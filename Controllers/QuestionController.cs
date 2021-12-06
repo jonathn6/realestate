@@ -17,9 +17,13 @@ namespace realestate.Controllers
         {
             this.repo = repo;
         }
-        public IActionResult Index()
+        public IActionResult Index(int id)
         {
-            var databaseData = repo.GetNextQuestion(0);
+            var Chapter = id;
+
+
+            var databaseData = repo.GetNextQuestion(Chapter, 0);
+            databaseData.chapter = Chapter;
             databaseData.questions_right = 0;
             databaseData.questions_tried = 0;
             databaseData.whichScreen = "I";
@@ -28,12 +32,13 @@ namespace realestate.Controllers
         [HttpPost]
         public ActionResult VerifyData(IFormCollection form, [FromForm] FormData p)
         {
-            
+            int Chapter = int.Parse(p.chapter);
             if (p.UserAnswer == p.CorrectAnswer)
             {
                 p.questions_right++;
                 p.questions_tried++;
-                var databaseData = repo.GetNextQuestion(p.question_id);
+                var databaseData = repo.GetNextQuestion(Chapter, p.question_id);
+                databaseData.chapter = Chapter;
                 if (databaseData.whichScreen == "F")
                 {
                     databaseData.whichScreen = "F";
@@ -51,7 +56,8 @@ namespace realestate.Controllers
             } else
             {
                 p.questions_tried++;
-                var databaseData = repo.GetSpecificQuestion(p.question_id);
+                var databaseData = repo.GetSpecificQuestion(Chapter, p.question_id);
+                databaseData.chapter = Chapter;
                 databaseData.whichScreen = "W";
                 databaseData.questions_right = p.questions_right;
                 databaseData.questions_tried = p.questions_tried;

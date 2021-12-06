@@ -15,11 +15,11 @@ namespace realestate
             _conn = conn;
         }
 
-        public Question GetNextQuestion(int id)
+        public Question GetNextQuestion(int chapter, int id)
         {
             try
             {
-                var SQL = "SELECT * FROM realestate.questions WHERE question_id > " + id + " ORDER BY question_id LIMIT 1";
+                var SQL = "SELECT * FROM realestate.questions WHERE chapter = " + chapter + " and question_id > " + id + " ORDER BY question_id LIMIT 1";
                 return _conn.QuerySingle<Question>(SQL);
             } 
             catch
@@ -42,9 +42,9 @@ namespace realestate
             }
         }
 
-        public Question GetSpecificQuestion(int id)
+        public Question GetSpecificQuestion(int Chapter, int id)
         {
-            var SQL = "SELECT * FROM realestate.questions WHERE question_id = " + id;
+            var SQL = "SELECT * FROM realestate.questions WHERE chapter = " + Chapter + " and question_id = " + id;
             return _conn.QuerySingle<Question>(SQL);
         }
     }
